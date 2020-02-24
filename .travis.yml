@@ -1,6 +1,6 @@
 services:
   - docker
-before_script:
+install:
   - |
     docker run -it -d \
       -v /var/run/docker.sock:/var/run/docker.sock \
@@ -9,7 +9,13 @@ before_script:
       -e GITHUB_URL=${GITHUB_URL} \
       --name java-pipeline \
       piantola/java-pipeline:latest
-script: docker exec java-pipeline /stages/01_clone.sh && \
-          docker exec java-pipeline /stages/02_build.sh && \
-          docker exec java-pipeline /stages/03_test.sh && \
-          docker exec java-pipeline /stages/04_archive.sh
+jobs:
+  include:
+    - stage: clone
+      script: docker exec java-pipeline /stages/01_clone.sh
+    - stage: build
+      script: docker exec java-pipeline /stages/02_build.sh
+    - stage: test
+      script: docker exec java-pipeline /stages/03_test.sh
+    - stage: archive
+      script: docker exec java-pipeline /stages/04_archive.sh
