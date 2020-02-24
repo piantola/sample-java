@@ -13,6 +13,7 @@ jobs:
   include:
     - stage: clone
       script: docker exec java-pipeline /stages/01_clone.sh
+      script: docker exec java-pipeline /stages/02_build.sh
     - stage: build
       script: docker exec java-pipeline /stages/02_build.sh
     - stage: test
