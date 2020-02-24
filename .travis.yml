@@ -9,14 +9,7 @@ before_script:
       -e GITHUB_URL=${GITHUB_URL} \
       --name java-pipeline \
       piantola/java-pipeline:latest
-jobs:
-  include:
-    - stage: clone
-      script: docker exec java-pipeline /stages/01_clone.sh
-      script: docker exec java-pipeline /stages/02_build.sh
-    - stage: build
-      script: docker exec java-pipeline /stages/02_build.sh
-    - stage: test
-      script: docker exec java-pipeline /stages/03_test.sh
-    - stage: archive
-      script: docker exec java-pipeline /stages/04_archive.sh
+script: docker exec java-pipeline /stages/01_clone.sh && \
+          docker exec java-pipeline /stages/02_build.sh && \
+          docker exec java-pipeline /stages/03_test.sh && \
+          docker exec java-pipeline /stages/04_archive.sh
