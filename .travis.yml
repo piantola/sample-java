@@ -1,6 +1,7 @@
+language: java
 services:
   - docker
-install:
+before_install:
   - |
     docker run -it -d \
       -v /var/run/docker.sock:/var/run/docker.sock \
